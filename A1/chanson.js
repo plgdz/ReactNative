@@ -1,32 +1,6 @@
 import React from 'react'
 import {View, Text, StyleSheet} from 'react-native'
 
-// Composant fonctionnel
-
-// function Chanson() {
-//     const nom  = 'La Puissance'
-//     return (
-//         <View>
-//             <Text>{nom}</Text>
-//         </View>
-//     )
-// }
-
-
-// Composant en arrow function
-
-// const Chanson = () => {
-//     const nom  = 'La Puissance'
-//     return (
-//         <View>
-//             <Text>{nom}</Text>
-//         </View>
-//     )
-// }
-
-
-// Composant class
-
 class Chanson extends React.Component{
 
     render() {
