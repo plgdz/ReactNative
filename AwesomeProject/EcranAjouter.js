@@ -1,5 +1,5 @@
 import { Slider } from '@react-native-assets/slider'
-import React from `react`
+import React from 'react'
 import {Text, Button, View, StyleSheet} from 'react-native'
 
 function EcranAjouter(nav){

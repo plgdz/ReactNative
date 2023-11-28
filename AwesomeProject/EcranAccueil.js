@@ -1,4 +1,4 @@
-import React from `react`
+import React from 'react'
 import {Text, Button, View} from 'react-native'
 
 function EcranAccueil(nav){

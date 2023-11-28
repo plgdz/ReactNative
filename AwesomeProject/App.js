@@ -1,27 +1,19 @@
-import React from 'react';
+import {React} from 'react';
 import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
   StyleSheet,
-  Text,
-  useColorScheme,
-  View,
+  
 } from 'react-native';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import {EcranAccueil} from 'Ecra'
+import { createNativeStackNavigator  } from '@react-navigation/native-stack';
+import { NavigationContainer  } from '@react-navigation/native';
+
+import {EcranAccueil} from './EcranAccueil.js'
+import {EcranAjouter} from './EcranAjouter.js'
 
 
+const Stack = createNativeStackNavigator()
 function App() {
-  const Stack = createNativeStackNavigator()
+  
   
   return (
     <NavigationContainer>
@@ -30,7 +22,6 @@ function App() {
        		  <Stack.Screen name='AjouterEvalution' component={EcranAjouter}/>
      	 </Stack.Navigator>
     </NavigationContainer>
-
   );
 }
 
