@@ -73,16 +73,20 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.tp_final"
+    namespace "com.tpfinal"
     defaultConfig {
-        applicationId "com.tp_final"
+        applicationId "com.tpfinal"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
-        manifestPlaceholders = [
-            appAuthRedirectScheme: 'com.tp_final'
-        ]
+        android {
+        defaultConfig {
+          manifestPlaceholders = [
+            appAuthRedirectScheme: 'com.tpfinal'
+          ]
+        }
+}
 
     }
     signingConfigs {
