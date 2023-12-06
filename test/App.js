@@ -5,7 +5,7 @@
  * @format
  */
 
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import { authenticateSpotify } from './SpotifyAuth';
 import {
   SafeAreaView,
@@ -15,17 +15,13 @@ import {
   Text,
   useColorScheme,
   View,
+  Image,
+
 } from 'react-native';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
 
 async function auth() {
+  const [token, setToken] = useState({})
   try {
     const response = await authenticateSpotify()
     const json = await response.json()
@@ -41,13 +37,51 @@ async function auth() {
 }
 
 function App() {
+  //Hooks
+  const [token, setToken] = useState({})
+  const [artist, setArtist] = useState({})
+  const [chargement, setChargement] = useState(true)
+  const [imgUrl, setImage] = useState({})
 
-  let t = auth()
+  useEffect(() => { loader() }, [])
 
+  async function loader () {
+    try {
+      const response = await authenticateSpotify()
+      const json = response
+      setToken(json)
+      console.log(token)
+
+      const responseArtist = await fetch('https://api.spotify.com/v1/artists/1G0YV9WooUBjrwDq0Q7EFK',
+        { method: 'GET',
+          headers: {
+            Authorization: `Bearer ${token.accessToken}`,
+            'Content-Type': 'application/json',
+          },} );
+      const jsonArtist = responseArtist.json()
+      setArtist(jsonArtist)
+      console.log(artist) 
+      setImage({uri: artist.images[0].url})
+      console.log('  ',imgUrl)
+    }
+    catch (error) {
+      console.log(error)
+    }
+    finally {
+      setChargement(false)
+      console.log(chargement)
+    }
+  }
+  
   return (
-    <View>
-      <Text>paul</Text>
-    </View>
+    <ScrollView>
+      <Text>PAUL</Text>
+        {chargement ? 
+          <Text>Chargement en cours</Text> :
+          <Image style={styles.image} source={imgUrl} />
+        }
+      {/* <Image style={styles.image} source={imgUrl} /> */}
+    </ScrollView>
   )
 }
 

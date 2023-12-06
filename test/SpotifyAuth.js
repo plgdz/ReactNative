@@ -15,8 +15,7 @@ export const authenticateSpotify = async () => {
   try {
     console.log("demarrer l'authentification...");
     const result = await authorize(config);
-    console.log('resultat:', result);
-    return result.accessToken;
+    return result
   } catch (error) {
     console.error('erreur:', error);
   }
