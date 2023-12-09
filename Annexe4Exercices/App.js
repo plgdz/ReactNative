@@ -103,17 +103,13 @@ const styles = StyleSheet.create(
       flexDirection:'row',
    
     },
-
     bouton : {
-
-      
       marginLeft: 15,
       paddingVertical: 18,
       paddingHorizontal: 32,
       borderRadius: 4,
       elevation: 3,
-      backgroundColor: 'blue',
-      
+      backgroundColor: 'blue', 
     }, 
 
     texteB :{

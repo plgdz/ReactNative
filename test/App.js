@@ -16,92 +16,143 @@ import {
   useColorScheme,
   View,
   Image,
+  TouchableHighlight,
 
 } from 'react-native';
 
+import { createNativeStackNavigator  } from '@react-navigation/native-stack';
 
-async function auth() {
-  const [token, setToken] = useState({})
-  try {
-    const response = await authenticateSpotify()
-    const json = await response.json()
-    console.log(json)
-    return json
-  }
-  catch (error) {
-    console.log(error)
-  }
-  finally {
-    console.log('test')
-  }
-}
-
+const Stack = createNativeStackNavigator()
 function App() {
   //Hooks
-  const [token, setToken] = useState({})
+  const [token, setToken] = useState('')
   const [artist, setArtist] = useState({})
   const [chargement, setChargement] = useState(true)
-  const [imgUrl, setImage] = useState({})
+  const [imgUrl, setImage] = useState([])
 
-  useEffect(() => { loader() }, [])
-
-  async function loader () {
+  //Fonctions
+  async function getToken() {
     try {
       const response = await authenticateSpotify()
-      const json = response
-      setToken(json)
-      console.log(token)
-
-      const responseArtist = await fetch('https://api.spotify.com/v1/artists/1G0YV9WooUBjrwDq0Q7EFK',
-        { method: 'GET',
-          headers: {
-            Authorization: `Bearer ${token.accessToken}`,
-            'Content-Type': 'application/json',
-          },} );
-      const jsonArtist = responseArtist.json()
-      setArtist(jsonArtist)
-      console.log(artist) 
-      setImage({uri: artist.images[0].url})
-      console.log('  ',imgUrl)
+      console.log('response', response.accessToken)
+      setToken(response.accessToken)
     }
     catch (error) {
       console.log(error)
     }
     finally {
-      setChargement(false)
-      console.log(chargement)
+      console.log('Token récupéré')
     }
   }
+
+  async function getArtist() {
+    try {
+      const response = await fetch('https://api.spotify.com/v1/artists/1G0YV9WooUBjrwDq0Q7EFK', {
+        method: 'GET',
+        headers: {
+          Authorization: 'Bearer ' + token
+        }
+      })
+      const json = await response.json()
+      console.log(json)
+      setArtist(json)
+      setImage(json.images[0].url)
+    }
+    catch (error) {
+      console.log(error)
+    }
+    finally {
+      console.log('Artiste récupéré')
+    }
+  }
+
+  getImage = () => {
+    setImage(artist.images)
+    console.log('image', imgUrl)
+    setChargement(false)
+  }
+
+
+  useEffect(() => {getToken()}, [])
+  useEffect(() => {getArtist()}, [token])
+  useEffect(() => {getImage()}, [artist])
   
   return (
     <ScrollView>
-      <Text>PAUL</Text>
-        {chargement ? 
-          <Text>Chargement en cours</Text> :
-          <Image style={styles.image} source={imgUrl} />
-        }
-      {/* <Image style={styles.image} source={imgUrl} /> */}
+      {chargement ? <Text>Chargement en cours</Text> :
+        <View style={styles.sectionContainer} >
+          <Text style={styles.sectionTitle}>
+            {artist.name}
+          </Text>
+          <Text style={styles.sectionDescription}>
+            {artist.genres}
+          </Text>
+          <View style={styles.imgContainer}>
+            <Image
+              source={{uri: imgUrl[0].url}}
+              style={styles.image}
+            />
+          </View>
+          <View style={styles.btnContainer}>
+            <TouchableHighlight 
+              style={styles.bouton}
+              onPress={() => {console.log('btn 1')}}>
+              <Text>btn 1</Text>
+            </TouchableHighlight>
+            <TouchableHighlight 
+              style={styles.bouton}
+              onPress={() => {console.log('btn 2')}}>
+              <Text>btn 2</Text>
+            </TouchableHighlight>
+          </View>
+        </View>
+      }
     </ScrollView>
   )
 }
 
 const styles = StyleSheet.create({
   sectionContainer: {
+    backgroundColor: 'red',
     marginTop: 32,
-    paddingHorizontal: 24,
   },
   sectionTitle: {
     fontSize: 24,
-    fontWeight: '600',
+    fontWeight: '700',
+    textAlign: 'center',
+    color: 'black',
   },
   sectionDescription: {
     marginTop: 8,
-    fontSize: 18,
+    fontSize: 14,
     fontWeight: '400',
+    textAlign: 'center',
   },
-  highlight: {
-    fontWeight: '700',
+  imgContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 32,
   },
+  image: {
+    width: 300,
+    height: 300,
+    margin: 'auto',
+  },
+  btnContainer: {
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    marginTop: 32,
+    backgroundColor: 'black',
+    height: 200,
+  },
+  bouton : {
+    marginLeft: 15,
+    paddingVertical: 18,
+    paddingHorizontal: 32,
+    borderRadius: 4,
+    elevation: 3,
+    backgroundColor: 'blue', 
+  }, 
 });
 
 export default App;
