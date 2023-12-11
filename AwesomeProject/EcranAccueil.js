@@ -11,4 +11,4 @@ function EcranAccueil(nav){
     )
 }
 
-export default EcranAccueil
+export default EcranAccueil   
