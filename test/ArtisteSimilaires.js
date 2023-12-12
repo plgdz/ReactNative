@@ -23,7 +23,6 @@ function Similar(nav) {
         }
       })
       const json = await response.json()
-      console.log(json)
       setArtistesSimilaires(json)
       setChargement(false)
     }

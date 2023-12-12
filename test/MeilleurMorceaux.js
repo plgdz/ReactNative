@@ -14,14 +14,13 @@ function MeilleursMorceaux(nav) {
   //Fonctions
   async function getMeilleurMorceaux() {
     try {
-      const response = await fetch('https://api.spotify.com/v1/artists/'+artist.id+'/top-tracks?market=CA', {
+      const response = await fetch('https://api.spotify.com/v1/artists/'+artist.id+'/top-tracks?market=FR', {
         method: 'GET',
         headers: {
           Authorization: 'Bearer ' + token
         }
       })
       const json = await response.json()
-      console.log('trakca', json)
       setMeilleurMorceaux(json)
       setChargement(false)
     }

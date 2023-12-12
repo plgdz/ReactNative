@@ -88,12 +88,12 @@ function Main(navigation) {
             <TouchableHighlight 
               style={styles.bouton}
               onPress={() => nav.navigate('Similar', {token: token, artist: artist})}>
-              <Text>btn 1</Text>
+              <Text style={styles.textBtn}>Artistes similaires</Text>
             </TouchableHighlight>
             <TouchableHighlight 
               style={styles.bouton}
               onPress={() => nav.navigate('MeilleurMorceaux', {token: token, artist: artist})}>
-              <Text>btn 2</Text>
+              <Text style={styles.textBtn}>Meilleurs titres</Text>
             </TouchableHighlight>
           </View>
         </View>
@@ -104,7 +104,6 @@ function Main(navigation) {
 
 const styles = StyleSheet.create({
   sectionContainer: {
-    backgroundColor: 'red',
     marginTop: 32,
   },
   sectionTitle: {
@@ -133,7 +132,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'center',
     marginTop: 32,
-    backgroundColor: 'black',
     height: 200,
   },
   bouton : {
@@ -142,8 +140,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 32,
     borderRadius: 4,
     elevation: 3,
-    backgroundColor: 'blue', 
+    backgroundColor: '#2e3134', 
   }, 
+  textBtn: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: 'white',
+  }
 });
 
 export default Main;
